@@ -1,933 +1,870 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta name=viewport content="width=800">
-  <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org">
-  <style type="text/css">
-    /* Color scheme stolen from Sergey Karayev */
-    
-    a {
-      color: #1772d0;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonathan Richard Schwarz</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-mid: #4a4a4a;
+      --ink-faint: #888;
+      --rule: #d4d0c8;
+      --accent: #1a3a5c;
+      --accent-light: #e8eef5;
+      --bg: #faf9f7;
+      --white: #ffffff;
+      --mono: 'Courier New', Courier, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    html { font-size: 16px; }
+    body { background: var(--bg); color: var(--ink); font-family: Georgia, 'Times New Roman', serif; line-height: 1.6; }
+
+    .site {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 52px 28px 100px;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      border-bottom: 1.5px solid var(--ink);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+    .masthead-top {
+      display: grid;
+      grid-template-columns: 108px 1fr auto;
+      align-items: start;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    .photo-wrap {
+      width: 108px;
+      height: 108px;
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--rule);
+    }
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .masthead-name-label {
+      font-family: var(--sans);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 9px;
+    }
+    .masthead h1 {
+      font-size: 31px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .masthead-links {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      align-items: flex-end;
+      padding-top: 4px;
+    }
+    .masthead-links a {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--accent);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
     }
-    
-    a:focus,
-    a:hover {
-      color: #f09228;
+    .masthead-links a:hover { text-decoration: underline; }
+    .masthead-links a .ti { font-size: 13px; }
+
+    /* ── AFFILIATIONS ── */
+    .affiliations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 0;
+      align-items: center;
+    }
+    .affil-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px 0 0;
+    }
+    .affil-item:first-child { padding-left: 0; }
+    .affil-logo {
+      height: 20px;
+      width: auto;
+      max-width: 72px;
+      object-fit: contain;
+      opacity: 0.8;
+    }
+    .affil-logo-fallback {
+      display: none;
+      height: 20px;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--ink-mid);
+      letter-spacing: 0.06em;
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: 2px;
+      padding: 2px 6px;
+    }
+    .affil-role {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--ink-mid);
+      line-height: 1.3;
+    }
+    .affil-role strong { color: var(--ink); font-weight: 600; }
+    .affil-sep {
+      width: 0.5px;
+      height: 20px;
+      background: var(--rule);
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 0.5px solid var(--rule);
+    }
+
+    /* ── BIO ── */
+    .bio-section { margin-bottom: 36px; }
+    .bio {
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      margin-bottom: 18px;
+    }
+    .bio a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-light); }
+    .bio a:hover { border-color: var(--accent); }
+    .bio strong { color: var(--ink); font-weight: 600; }
+
+    .research-areas { display: flex; flex-wrap: wrap; gap: 7px; }
+    .area-tag {
+      font-family: var(--sans);
+      font-size: 12px;
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: 2px;
+      padding: 4px 10px;
+      color: var(--ink-mid);
+    }
+
+    /* ── NEWS ── */
+    .news-section { margin-bottom: 44px; }
+    .news-list { list-style: none; }
+    .news-item {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 16px;
+      padding: 9px 0;
+      border-bottom: 0.5px solid var(--rule);
+      align-items: baseline;
+    }
+    .news-date {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--ink-faint);
+      white-space: nowrap;
+    }
+    .news-text {
+      font-family: var(--sans);
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--ink-mid);
+    }
+    .news-text a { color: var(--accent); text-decoration: none; }
+    .news-text a:hover { text-decoration: underline; }
+    .news-text strong { color: var(--ink); }
+    .show-more-btn {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--accent);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-top: 11px;
+      padding: 0;
+    }
+    .show-more-btn:hover { text-decoration: underline; }
+    .hidden { display: none !important; }
+
+    /* ── PAPERS ── */
+    .papers-section { margin-bottom: 44px; }
+    .category-filter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+    .cat-btn {
+      font-family: var(--sans);
+      font-size: 12px;
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: 2px;
+      padding: 4px 10px;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s, border-color 0.1s;
+    }
+    .cat-btn:hover { background: var(--accent-light); }
+    .cat-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+
+    .paper-row {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 0.5px solid var(--rule);
+      align-items: start;
+    }
+    .paper-row.highlight {
+      background: var(--accent-light);
+      margin: 0 -12px;
+      padding: 14px 12px;
+      border-radius: 3px;
+      border-bottom: 0.5px solid transparent;
+      margin-bottom: 1px;
+    }
+    .paper-venue {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+      line-height: 1.5;
+      text-align: right;
+      padding-top: 2px;
+    }
+    .paper-venue strong {
+      color: var(--accent);
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .oral-badge {
+      font-family: var(--sans);
+      font-size: 9.5px;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .paper-title {
+      font-size: 14.5px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .paper-title a {
+      color: inherit;
       text-decoration: none;
+      border-bottom: 1px solid transparent;
     }
-    
-    body,
-    td,
-    th,
-    tr,
-    p,
-    a {
-      font-family: 'Lato', Verdana, Helvetica, sans-serif;
-      font-size: 14px
+    .paper-title a:hover { border-color: var(--accent); color: var(--accent); }
+    .paper-authors {
+      font-family: var(--sans);
+      font-size: 12.5px;
+      color: var(--ink-faint);
+      line-height: 1.4;
+      margin-bottom: 6px;
     }
-    
-    strong {
-      font-family: 'Lato', Verdana, Helvetica, sans-serif;
-      font-size: 14px;
+    .paper-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .paper-links a {
+      font-family: var(--sans);
+      font-size: 11.5px;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 3px;
     }
-    
-    heading {
-      font-family: 'Lato', Verdana, Helvetica, sans-serif;
-      font-size: 22px;
+    .paper-links a:hover { text-decoration: underline; }
+    .paper-links a .ti { font-size: 13px; }
+
+    /* ── PEOPLE ── */
+    .people-section { margin-bottom: 44px; }
+    .people-group { margin-bottom: 28px; }
+    .people-group-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 12px;
+      font-weight: 600;
     }
-    
-    heading2 {
-      font-family: 'Lato', Verdana, Helvetica, sans-serif;
-      font-size: 18px;
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
     }
-    
-    papertitle {
-      font-family: 'Lato', Verdana, Helvetica, sans-serif;
-      font-size: 14px;
-      font-weight: 700
+    .person-card {
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 10px 12px;
+      border: 0.5px solid var(--rule);
+      border-radius: 3px;
+      background: var(--white);
     }
-    
-    name {
-      font-family: 'Lato', Verdana, Helvetica, sans-serif;
-      font-size: 32px;
+    .person-card.incoming {
+      border-color: var(--accent);
+      background: var(--accent-light);
     }
-    
-    .one {
-      width: 160px;
-      height: 160px;
-      position: relative;
+    .person-name {
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
     }
-    
-    .two {
-      width: 160px;
-      height: 160px;
-      position: absolute;
-      transition: opacity .2s ease-in-out;
-      -moz-transition: opacity .2s ease-in-out;
-      -webkit-transition: opacity .2s ease-in-out;
+    .person-name a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
     }
-    
-    .fade {
-      transition: opacity .2s ease-in-out;
-      -moz-transition: opacity .2s ease-in-out;
-      -webkit-transition: opacity .2s ease-in-out;
+    .person-name a:hover { border-color: var(--accent); color: var(--accent); }
+    .person-affil {
+      font-size: 11.5px;
+      color: var(--ink-faint);
     }
-    
-    span.highlight {
-      background-color: #ffffd0;
+    .person-badge {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 0.5px solid var(--accent);
+      border-radius: 2px;
+      padding: 1px 5px;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+    .person-card.incoming .person-badge {
+      background: var(--white);
+    }
+    @media (max-width: 580px) {
+      .people-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--ink-faint);
+      text-align: center;
+      padding-top: 32px;
+      border-top: 0.5px solid var(--rule);
+      margin-top: 48px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 580px) {
+      .site { padding: 32px 18px 72px; }
+      .masthead-top { grid-template-columns: 88px 1fr; gap: 16px; }
+      .masthead-links { display: none; }
+      .photo-wrap { width: 88px; height: 88px; }
+      .masthead h1 { font-size: 26px; }
+      .affil-sep { display: none; }
+      .affil-item { padding: 0; width: 100%; }
+      .affiliations { flex-direction: column; gap: 8px; }
+      .paper-row { grid-template-columns: 46px 1fr; gap: 10px; }
     }
   </style>
-  <link rel="icon" type="image/png" href="images/science.png">
-  <title>Jonathan Richard Schwarz</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 </head>
-
 <body>
-  <table width="800" border="0" align="center" cellspacing="0" cellpadding="0">
-    <tr>
-      <td>
-        <table width="90%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr>
-            <td width="67%" valign="middle">
-              <p align="center">
-                <name>Jonathan Richard Schwarz</name>
-              </p>              
+<main class="site">
 
-              <p>
-	          I'm a Visiting Professor at <a href="https://www.imperial.ac.uk/">Imperial College London</a> and the Head of AI Research at Thomson Reuters (TR), leading TR's Foundational Research Team. In addition, I serve as an Expert Advisor to the UK's <a href="https://aisi.gov.uk/">AI Security Institute </a>. 
-	          I joined TR through the acquisition of <a href="https://www.safesigntechnologies.com/">Safe Sign Technologies</a>, for which I served as Co-Founder and Chief Scientific Officer (CSO). 
-	          </p>
+  <!-- ═══ MASTHEAD ═══ -->
+  <header class="masthead">
+    <div class="masthead-top">
 
-	      	  <p>
-	      	  Previously, I was also a Research Fellow at <a href="https://harvard.edu/">Harvard University</a> and a Senior Research Scientist at <a href="https://deepmind.google/">Google DeepMind</a>. I obtained my PhD from the joint DeepMind-<a href="https://www.ucl.ac.uk/">University College London</a> programme, advised by <a href="https://www.stats.ox.ac.uk/~teh/">Yee Whye Teh</a> and <a href="http://www.gatsby.ucl.ac.uk/~pel/">Peter Latham</a>. <a href="https://discovery.ucl.ac.uk/id/eprint/10180580/">My Thesis</a>
-              focused on sparse parameterisations and knowledge transfer for efficient Machine Learning. Before that, I spent two years at the <a href="https://www.ucl.ac.uk/gatsby/gatsby-computational-neuroscience-unit/">Gatsby Computational Neuroscience Unit</a> and graduated top-of-the class from <a href="https://www.ed.ac.uk/informatics">The University of Edinburgh</a>.
-              </p>
+      <div class="photo-wrap">
+        <img
+          src="https://www.enterprisetimes.co.uk/wp-content/uploads/2025/12/Dr-Jonathan-Richard-Schwarz-Head-of-AI-Research-at-Thomson-Reuters.jpg"
+          alt="Jonathan Richard Schwarz"
+          id="profile-photo"
+        />
+      </div>
 
-              <p>
-              My research focuses on the objective of building (i) <b>efficient</b>, (ii) <b>general</b> and (iii) <b>robust</b> Machine Learning systems. A central paradigm in my approach is the design of algorithms that can effectively abstract knowledge and skills present in related problems, enabling their utilisation for efficient learning on future tasks. In this way, agents gradually build diverse repertoires of skills, allowing transfer to future tasks using only a fraction of the otherwise required learning time and/or data.
-              </p>
+      <div>
+        <p class="masthead-name-label">Academic website</p>
+        <h1>Jonathan<br>Richard Schwarz</h1>
+      </div>
 
-              <table width="100%" border="0" cellspacing="0" cellpadding="20">
-              <tr bgcolor="#ffffd0">
-	      </td>
-              </table>
+      <nav class="masthead-links" aria-label="Contact and profiles">
+        <a href="mailto:jschwarz@imperial.ac.uk"><i class="ti ti-mail" aria-hidden="true"></i>email</a>
+        <a href="https://scholar.google.co.uk/citations?user=Efs3XxQAAAAJ&hl=en" target="_blank" rel="noopener"><i class="ti ti-school" aria-hidden="true"></i>scholar</a>
+        <a href="https://twitter.com/schwarzjn_" target="_blank" rel="noopener"><i class="ti ti-brand-x" aria-hidden="true"></i>twitter</a>
+        <a href="https://www.linkedin.com/in/schwarzjonathan/" target="_blank" rel="noopener"><i class="ti ti-brand-linkedin" aria-hidden="true"></i>linkedin</a>
+        <a href="mailto:jschwarz@imperial.ac.uk?subject=CV%20Request"><i class="ti ti-file-text" aria-hidden="true"></i>cv on request</a>
+      </nav>
+    </div>
 
-            </td>
-            <td width="33%">
-              <img width="120%" src="images/new_profile.jpg">
-            </td>
-          </tr>
-        </table>
+    <!-- Affiliations row -->
+    <div class="affiliations">
 
-  <table width="800" border="0" align="center" cellspacing="0" cellpadding="0">
-    <tr>
-      <td>
-        <table width="90%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr>
-            <td width="67%" valign="middle">
-              <p>
-		To that end, most of my existing work falls within one or more of the following categories:
-                <ul>
-                  <li><b>Sparsity & Efficient Parameterizations</b>:
-                        <a href="https://arxiv.org/abs/1905.01240">[ICLR'19]</a>
-                        <a href="https://openreview.net/forum?id=rylnK6VtDH">[ICLR'20]</a>
-                        <a href="https://arxiv.org/abs/2110.00296">[NeurIPS'21]</a>
-                        <a href="https://arxiv.org/abs/2205.08957">[TMLR'22]</a>
-                        <a href="https://arxiv.org/abs/2010.14274">[JMLR'22]</a>
-                        <a href="https://arxiv.org/abs/2301.09479">[ICML'23]</a>
-                        <a href="https://arxiv.org/abs/2403.08477">[ICML'24]</a>
-                        <a href="https://arxiv.org/abs/2506.12597">[ACL'25]</a>
-                  </li>
-                  <li><b>Large Language Models (LLMs)</b>:
-                        <a href="https://aclanthology.org/Q18-1023/">[TACL'18]</a>
-                        <a href="https://arxiv.org/abs/2406.10670">[NeurIPS'24]</a>
-                        <a href="https://arxiv.org/abs/2403.04317">[NeurIPS'24]</a>
-                        <a href="https://arxiv.org/abs/2407.06483">[ICLR'25]</a>
-                        <a href="https://arxiv.org/abs/2506.12597">[ACL'25]</a>
-					    <a href="https://arxiv.org/abs/2509.16093">[EMNLP'25]</a>
-                        <a href="https://arxiv.org/abs/2508.11551">[arXiv'25]</a>
-                  </li>
-                  <li><b>Data-centric ML</b>:
-                        <a href="https://arxiv.org/abs/2302.00617">[NeurIPS'23]</a>
-                        <a href="https://arxiv.org/abs/2312.05328">[ECCV'23]</a>
-                        <a href="https://arxiv.org/abs/2406.10670">[NeurIPS'24]</a>
-					    <a href="https://arxiv.org/abs/2508.11551">[TMLR'25]</a>
-					    <a href="https://arxiv.org/abs/2510.26384">[arXiv'25]</a>
-                  </li>
-                  <li><b>Continual Learning</b>:
-                        <a href="https://arxiv.org/abs/1805.06370">[ICML'18]</a>
-                        <a href="https://arxiv.org/abs/1811.11682">[NeurIPS'19]</a>
-                        <a href="https://arxiv.org/abs/1901.11356">[ICLR'20]</a>
-                        <a href="https://arxiv.org/abs/2110.00296">[NeurIPS'21]</a>
-                        <a href="https://arxiv.org/abs/2403.04317">[NeurIPS'24]</a>
-                  </li>
-                  <li><b>INRs / Neural Data Compression</b>:
-                        <a href="https://arxiv.org/abs/2205.08957">[TMLR'22]</a>
-                        <a href="https://arxiv.org/abs/2301.09479">[ICML'23]</a>
-                        <a href="https://arxiv.org/abs/2302.03130">[ICLR WS'23]</a>
-                        <a href="https://arxiv.org/abs/2302.00617">[NeurIPS'23]</a>
-                        <a href="https://arxiv.org/abs/2312.02753v1">[CVPR'24]</a>
-                  </li>
-                  <li><b>Meta-Learning</b>:
-                        <a href="https://arxiv.org/abs/1807.01622">[ICML WS'18]</a>
-                        <a href="https://bayesiandeeplearning.org/2018/papers/92.pdf">[NeurIPS WS'18]</a>
-                        <a href="https://arxiv.org/abs/1901.05761">[ICLR'19]</a>
-                        <a href="https://arxiv.org/abs/1903.11907">[arXiv'19]</a>
-                        <a href="https://arxiv.org/abs/2205.08957">[TMLR'22]</a>
-                        <a href="https://arxiv.org/abs/2301.09479">[ICML'23]</a>
-                        <a href="https://arxiv.org/abs/2302.00617">[NeurIPS'23a]</a>
-                        <a href="https://openreview.net/pdf?id=tt7bQnTdRm">[NeurIPS'23b]</a>
-                        <a href="https://arxiv.org/abs/2403.08477">[ICML'24]</a>
-                  </li>
-                </ul>
-              </p>
+      <div class="affil-item">
+        <img class="affil-logo" src="images/icl.png" alt="Imperial College London logo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <span class="affil-logo-fallback">ICL</span>
+        <span class="affil-role"><strong>Visiting Professor</strong> · Imperial College London</span>
+      </div>
 
-              <p align=center>
-                <a href="mailto:jschwarz@imperial.ac.uk">Email</a> &nbsp/&nbsp
-                <a href="https://scholar.google.co.uk/citations?user=Efs3XxQAAAAJ&hl=en">Google Scholar</a> &nbsp/&nbsp
-                <a href="https://twitter.com/schwarzjn_">Twitter</a> &nbsp/&nbsp
-                <a href="https://www.linkedin.com/in/schwarzjonathan/">LinkedIn</a> &nbsp/&nbsp
-                Full CV: <i>on request</i>
-              </p>
-            </td>
-          </tr>
-        </table>
-        
-	<center>
-	<heading>News</heading>
-	</center>
-	<br>
-	<ul>
-	  <li>Invited talks at <a href="https://allenai.org/">The Allen Institute for AI</a> and <a href="https://www.oii.ox.ac.uk/">The University of Oxford</a> (November 2025).</li>
-	  <li><a href="https://arxiv.org/abs/2510.26384">Scales++</a> (Efficient Evals through Data Pruning) released (October 2025).</li>
-	  <li>Serving as Area Chair for ICLR'25 (October 2025).</li>
-	  <li><a href="https://arxiv.org/abs/2508.11551">ADMIRE-BayesOpt</a> accepted to TMLR (November 2025).</li>
-	  <li>New paper on efficient LLM evals with Data Pruning based on Cognitative Scales Embeddings: <a href="https://arxiv.org/abs/2510.26384">Scales++</a> (October 2025).</li>
-	  <li>Invited panel discussion at <a href="https://www.algopreneurship.org/">The 2025 Global Summit on Open Problems for AI</a> (October 2025).</li>
-	  <li>Invited panel discussion at <a href="https://royalsociety.org/science-events-and-lectures/2025/09/ai-and-the-law/">The Royal Society</a> (September 2025).</li>
-	  <li>New EMNLP paper on <a href="https://arxiv.org/abs/2509.16093">Automatic LLM evals calibrated with human judgements</a> (May 2025).</li>
-	  <li>Serving as Area Chair for EMNLP'25 (September 2025).</li>
-	  <li>Our <a href="https://arxiv.org/abs/2508.11551">new paper</a> on BayesOpt for data-mixture discovery during pre- and post-training is now available (August 2025).</li>
-	  <li>New ACL'25 Oral paper on <a href="https://arxiv.org/abs/2506.12597">Automatic Expert Discovery in LLM Upcycling via Sparse Interpolated Mixture-of-Experts</a> (May 2025).</li>
-	  <li>Guest lecture at The University of Virginia on Data-Centric ML for LLM Training (February 2025).</li>
-	  <li>Our paper on <a href="https://arxiv.org/abs/2407.06483">Composable Interventions for LLMs</a> was accepted to ICLR 2025 (January 2025)!</li>
-	  <li>Organising the NeurIPS'24 workshop on  <a href="https://compositional-learning.github.io/"> Compositional Learning: Perspectives, Methods, and Paths Forward</a> (December 2024).</li>
-	  <li>Serving as publicity chair at <a href="https://lifelong-ml.cc/"> CoLLAs 2025</a> (December 2024)!</li>
-	  <li>Our paper on AI agents for scientific discovery accepted at <a href="https://www.cell.com/cell/fulltext/S0092-8674(24)01070-5"> Cell</a> (October 2024).</li>
-	  <li>Invited talk at the <a href="https://www.algopreneurship.org/">AE: Global Summit on Open Problems for AI</a> on Data-Centric ML (October 2024).</li>
-	  <li>Invited talk at <a href="https://conferences.miccai.org/2024/en/">MICCAI 2024</a> on INRs (October 2024).</li>
-	  <li><a href="https://arxiv.org/abs/2406.10670">CoLoR-Filter</a> accepted to NeurIPS'24 (September 2024).</li>
-	  <li><a href="https://arxiv.org/abs/2403.04317">MAC</a> accepted to NeurIPS'24 (September 2024).</li>
-	  <li><a href="https://www.safesigntechnologies.com/">Safe Sign Technologies</a> acquired by Thomson Reuters (August 2024)!</a></li>
-	  <li><a href="https://arxiv.org/abs/2312.05328">Bad Students make great teachers</a> accepted to ECCV (June 2024)!</a></li>
-	  <li><a href="https://arxiv.org/abs/2403.08477">SMAT</a> accepted to ICML (May 2024)!</a></li>
-	  <li>Invited talk at the Hong Kong University of Science and Technology (<a href="https://hkust.edu.hk/">HKUST</a>) (April 2024).</a></li>
-	  <li>Releasing our new perspective paper on <a href="https://arxiv.org/abs/2404.02831">Empowering Scientific Discovery with AI Agents</a> (April 2024).</a></li>
-	  <li>Releasing <a href="https://arxiv.org/abs/2403.08477">SMAT</a>, our new state-of-the-art Meta-Learner (March 2024) !</a></li>
-	  <li>Announcing the <a href="https://sites.google.com/view/harvard-efficient-ml"> Harvard Efficient ML Seminar Series</a> (March 2024) !</a></li>
-	  <li>Announcing <a href="https://arxiv.org/abs/2403.04317">MAC</a>, our new RAG/Online Adaptation method for LLMs (March 2024).</li>
-	  <li><a href="https://arxiv.org/abs/2312.02753v1">C3</a> accepted to CVPR (March 2024).</li>
-	  <li>Invited talk at MIT on continual learning for LLMs (February 2024).</li>
-	  <li>Invited talk at the <a href="https://web.stanford.edu/group/it-forum/colloquium.html">Stanford Information Theory Forum</a> on neural data compression with INRs (January 2024).</a></li>
-	  <li>Invited talk at <a href="https://mistral.ai/">Mistral</a> on <a href="https://arxiv.org/abs/2312.05328">Bad Students Make Great Teachers</a> (January 2024).</a></li>
-	</ul>
+      <div class="affil-sep" aria-hidden="true"></div>
 
-	<br>
-	<br>
-	<center>
-	<heading>Research</heading>
-	<br>
-	<br>
-	Selected papers are <span class="highlight">highlighted</span>.
-	</center>
-	<br>
+      <div class="affil-item">
+        <img class="affil-logo" src="images/tr.png" alt="Thomson Reuters logo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <span class="affil-logo-fallback">TR</span>
+        <span class="affil-role"><strong>Head of AI Research</strong> · Thomson Reuters</span>
+      </div>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/scales.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2510.26384">
-                  <papertitle>Scales++: Compute Efficient Evaluation Subset Selection with Cognitive Scales Embeddings</papertitle>
-                </a>
-                <br>
-                Andrew M. Bean, Nabeel Seedat, Shengzhuang Chen, <strong>Jonathan Richard Schwarz°</strong>
-				<br>
-	  			<br>
-                <a href="https://arxiv.org/abs/2510.26384">🔗 Project Website</a>
-                <br>
-                <br>
-				<em>arXiv 2025</em>
-              </p>
-          </td>
-        </table>
+      <div class="affil-item">
+        <img class="affil-logo" src="images/oii.png" alt="UK Government logo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <span class="affil-logo-fallback">OII</span>
+        <span class="affil-role"><strong>Research Associate</strong> · Oxford Internet Institute</span>
+      </div>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr bgcolor="#ffffd0">
-          <td width="25%"><img src="images/admire_bo.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2508.11551">
-                  <papertitle>ADMIRE-BayesOpt: Accelerated Data MIxture RE-weighting for Language Models with Bayesian Optimization</papertitle>
-                </a>
-                <br>
-                Shengzhuang Chen*, Xu Ouyang*, Michael Arthur Leopold Pearce, Thomas Hartvigsen, <strong>Jonathan Richard Schwarz</strong>
-				<br>
-				<br>
-                <a href="https://xo28.github.io/ADMIRE-BayesOpt-homepage/">🔗 Project Website</a>
-				<br>
-                <a href="https://github.com/xo28/ADMIRE-BayesOpt">💻 Code</a>
-				<br>
-                <a href="https://xo28.github.io/ADMIRE-BayesOpt-homepage/">📊 Data</a>
-				<br>
-                <br>
-				<em>TMLR 2025</em>
-                <br>
-                <br>
-                <em>*: Joint first authorship</em>
-              </p>
-          </td>
-          </td>
-        </table>
+      <div class="affil-sep" aria-hidden="true"></div>
 
-	    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/pointwise.png" alt="clean-usnob" width="160" height="140"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2509.16093">
-                  <papertitle>Beyond Pointwise Scores: Decomposed Criteria-Based Evaluation of LLM Responses</papertitle>
-                </a>
-                <br>
-                Fangyi Yu, Nabeel Seedat, Dasha Herrmannova, Frank Schilder, <strong>Jonathan Richard Schwarz</strong>
-				<br>
-			  	<br>
-				<em>EMNLP 2025</em>
-              </p>
-          </td>
-        </table>
+      <div class="affil-item">
+        <img class="affil-logo" src="images/aisi.png" alt="AISI logo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <span class="affil-logo-fallback">AISI</span>
+        <span class="affil-role"><strong>Expert Advisor</strong> · UK AI Security Institute</span>
+      </div>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr bgcolor="#ffffd0">
-          <td width="25%"><img src="images/simoe.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2506.12597">
-                  <papertitle>Automatic Expert Discovery in LLM Upcycling via Sparse Interpolated Mixture-of-Experts</papertitle>
-                </a>
-				<br>
-                <br>
-                Shengzhuang Chen, Ying Wei°, <strong>Jonathan Richard Schwarz°</strong>
-				<br>
-				<br>
-                <a href="https://szc12153.github.io/sparse_interpolated_experts/simoe/">🔗 Project Website</a>
-                <br>
-                <br>
-                <em>Association for Computational Linguistics (ACL) 2025</em> <font color="red"><strong> (Oral)</strong></font>
-                <br>
-                <br>
-                <em>° : Joint senior authorship</em>
-              </p>
-          </td>
-          </td>
-        </table>
+    </div>
+  </header>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/smat.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2403.08477">
-                  <papertitle>Unleashing the Power of Meta-tuning for Few-shot Generalization Through Sparse Interpolated Experts</papertitle>
-                </a>
-                <br>
-                Shengzhuang Chen, Jihoon Tack, Yunqiao Yang, Yee Whye Teh, Ying Wei°, <strong>Jonathan Richard Schwarz°</strong>
-		<br>
-	  	<br>
-                <a href="https://github.com/szc12153/sparse_meta_tuning">💻 Code</a>
-	  	<br>
-                <a href="https://szc12153.github.io/sparse_interpolated_experts/smat/">🔗 Project Website</a>
-                <br>
-                <br>
-		<em>ICML 2024</em>
-                <br>
-                <br>
-                <em>° : Joint senior authorship</em>
-              </p>
-          </td>
-        </table>
+  <!-- ═══ RESEARCH FOCUS ═══ -->
+  <section class="bio-section">
+    <p class="section-label">Research focus</p>
+    <p class="bio">
+      My research targets <strong>efficient, general, and robust machine learning</strong> — particularly algorithms that transfer knowledge across tasks, letting agents build skill repertoires that accelerate future learning. A central goal is designing systems that abstract knowledge from related problems and reuse it effectively, enabling faster and more flexible learning on new tasks.
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/color_filter.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2406.10670">
-                  <papertitle>CoLoR-Filter: Conditional Loss Reduction Filtering for Targeted Language Model Pre-training</papertitle>
-                </a>
-                <br>
-                David Brandfonbrener, Hanlin Zhang, Andreas Kirsch, <strong>Jonathan Richard Schwarz</strong>, Sham Kakade
-                <br>
-                <br>
-				<em>NeurIPS 2024</em>
-              </p>
-          </td>
-        </table>
+      Beyond foundational machine learning, I have a keen interest in the societal impacts of AI, including AI Safety, Economics, and Political Science. A particular focus is <strong>effective pluralism in the values and governance of Foundation Models</strong>, and ensuring shared stake in their societal consequences.
+    </p>
+    <p class="bio">
+      Previously, I was a Research Fellow at <a href="https://harvard.edu/" target="_blank" rel="noopener">Harvard University</a> and
+      Co-Founder and Chief Scientific Officer at <a href="https://www.safesigntechnologies.com/" target="_blank" rel="noopener">Safe Sign Technologies</a>,
+      a start-up focused on developing Foundation Models for professional work (acquired by Thomson Reuters in 2024). Before Entrepreneurship,
+      I spent seven years at <a href="https://deepmind.google/" target="_blank" rel="noopener">Google DeepMind</a> as a Senior Research Scientist. During my time
+      at DeepMind, I completed my <a href="https://discovery.ucl.ac.uk/id/eprint/10180580/" target="_blank" rel="noopener">PhD</a> through the
+      DeepMind–<a href="https://www.ucl.ac.uk/" target="_blank" rel="noopener">UCL</a> programme, advised by
+      <a href="https://www.stats.ox.ac.uk/~teh/" target="_blank" rel="noopener">Yee Whye Teh</a> and
+      <a href="http://www.gatsby.ucl.ac.uk/~pel/" target="_blank" rel="noopener">Peter Latham</a>. My PhD focused on sparse parameterisations and knowledge transfer for efficient ML,
+      researching many ideas (Continual & Meta-Learning, Sparsity, Compression) that became pivotal in the development of large-scale Foundation Models.
+      Before post-graduate work, I graduated top of class from the <a href="https://www.ed.ac.uk/informatics" target="_blank" rel="noopener">University of Edinburgh</a> with a specialism
+      in Machine Learning.
+    </p>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/mac.png" alt="clean-usnob" width="160" height="90"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2403.04317">
-                  <papertitle>Online Adaptation of Language Models with a Memory of Amortized Contexts</papertitle>
-                </a>
-                <br>
-                Jihoon Tack, Jaehyung Kim, Eric Mitchell, Jinwoo Shin, Yee Whye Teh, <strong>Jonathan Richard Schwarz</strong>
-				<br>
-	  			<br>
-                <a href="https://jihoontack.github.io/assets/mac.pdf">🗣️ Slides</a>
-	  			<br>
-                <a href="https://www.youtube.com/watch?v=7WG6-aYBgX4">🎞️ Video</a>
-	  			<br>
-                <a href="https://github.com/jihoontack/MAC">💻 Code</a>
-	  			<br>
-                <a href="https://jihoontack.github.io/MAC/">🔗 Project Website</a>
-                <br>
-                <br>
-				<em>NeurIPS 2024</em>
-              </p>
-          </td>
-        </table>
+	
+    <p class="section-label">Research Interests</p>
+    <div class="research-areas" aria-label="Research areas">
+      <span class="area-tag">Large Language Models</span>
+      <span class="area-tag">Societal Impacts</span>
+      <span class="area-tag">AI Safety</span>
+      <span class="area-tag">Data-centric Machine Learning</span>
+      <span class="area-tag">Reasoning &amp; Agents</span>
+      <span class="area-tag">Sparsity</span>
+      <span class="area-tag">Continual Learning</span>
+      <span class="area-tag">Neural Data Compression</span>
+      <span class="area-tag">Meta-Learning</span>
+    </div>
+  </section>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/bio_agents.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2404.02831">
-                  <papertitle>Empowering Biomedical Discovery with AI Agents</papertitle>
-                </a>
-                <br>
-                Shanghua Gao, Ada Fang, Yepeng Huang, Valentina Giunchiglia, Ayush Noori, <strong>Jonathan Richard Schwarz</strong>, Yasha Ektefaie, Jovana Kondic, Marinka Zitnik
-                <br>
-                <br>
-				<em>Cell 2024</em>
-              </p>
-          </td>
-        </table>
+  <!-- ═══ NEWS ═══ -->
+  <section class="news-section">
+    <p class="section-label">News</p>
+    <ul class="news-list" id="news-list" aria-label="Recent news">
+      <li class="news-item">
+        <span class="news-date">June 2026</span>
+        <span class="news-text">Excited to join the <a href="https://www.oii.ox.ac.uk/" target="_blank" rel="noopener">Oxford Internet Institute</a> as a Research Associate.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">May 2026</span>
+        <span class="news-text">Pleased to join an <a href="https://www.youtube.com/watch?v=cJV-HuzQYCg&feature=youtu.be" target="_blank" rel="noopener">inspiration exchange</a> on Causal Reasoning & LLMs at The University of Cambridge.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">May 2026</span>
+        <span class="news-text">Very proud to officially launch Imperial's new <a href="https://www.imperial.ac.uk/frontier-ai/" target="_blank" rel="noopener">Frontier AI Research Lab</a>.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">May 2026</span>
+        <span class="news-text">Serving as Area Chair for the NeurIPS 2026 Evaluations and Datasets Track.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">April 2026</span>
+        <span class="news-text">New paper on <a href="https://arxiv.org/abs/2605.12120">measuring principal hierarchies Under high-stakes competing demands</a>.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">February 2026</span>
+        <span class="news-text">New paper on <a href="https://arxiv.org/abs/2603.06610">measuring Forgetting in LLM Post-Training</a>.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">February 2026</span>
+        <span class="news-text">New paper on using <a href="https://arxiv.org/abs/2602.02898">aligning Language Model benchmarks with pairwise preferences</a>.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">January 2026</span>
+        <span class="news-text">Serving as Area Chair for ICLR 2026.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">January 2026</span>
+        <span class="news-text">New paper on using <a href="https://arxiv.org/abs/2601.13806">Knowledge Graphs to construct LLM training data</a>.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">Nov 2025</span>
+        <span class="news-text">Invited talks at <a href="https://allenai.org/" target="_blank" rel="noopener">Allen Institute for AI</a> and <a href="https://www.oii.ox.ac.uk/" target="_blank" rel="noopener">University of Oxford</a>.</span>
+      </li>
+      <li class="news-item">
+        <span class="news-date">Nov 2025</span>
+        <span class="news-text"><a href="https://arxiv.org/abs/2508.11551" target="_blank" rel="noopener">ADMIRE-BayesOpt</a> accepted to TMLR.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Oct 2025</span>
+        <span class="news-text"><a href="https://arxiv.org/abs/2510.26384" target="_blank" rel="noopener">Scales++</a> released — efficient evals through data pruning.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Sep 2025</span>
+        <span class="news-text">Invited panel discussion at <a href="https://royalsociety.org/science-events-and-lectures/2025/09/ai-and-the-law/" target="_blank" rel="noopener">The Royal Society</a> on AI and the Law.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">May 2025</span>
+        <span class="news-text"><a href="https://arxiv.org/abs/2506.12597" target="_blank" rel="noopener">Sparse Interpolated MoE</a> accepted to ACL 2025 <strong>(Oral)</strong>.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Jan 2025</span>
+        <span class="news-text"><a href="https://arxiv.org/abs/2407.06483" target="_blank" rel="noopener">Composable Interventions for LLMs</a> accepted to ICLR 2025.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Dec 2024</span>
+        <span class="news-text">Organised the NeurIPS 2024 workshop on <a href="https://compositional-learning.github.io/" target="_blank" rel="noopener">Compositional Learning</a>.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Sep 2024</span>
+        <span class="news-text"><a href="https://arxiv.org/abs/2406.10670" target="_blank" rel="noopener">CoLoR-Filter</a> and <a href="https://arxiv.org/abs/2403.04317" target="_blank" rel="noopener">MAC</a> both accepted to NeurIPS 2024.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Aug 2024</span>
+        <span class="news-text"><a href="https://www.safesigntechnologies.com/" target="_blank" rel="noopener">Safe Sign Technologies</a> acquired by Thomson Reuters.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Oct 2024</span>
+        <span class="news-text">Paper on AI agents for scientific discovery accepted at <a href="https://www.cell.com/cell/fulltext/S0092-8674(24)01070-5" target="_blank" rel="noopener">Cell</a>.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Apr 2024</span>
+        <span class="news-text">Announcing the <a href="https://sites.google.com/view/harvard-efficient-ml" target="_blank" rel="noopener">Harvard Efficient ML Seminar Series</a>.</span>
+      </li>
+      <li class="news-item hidden extra-news">
+        <span class="news-date">Jan 2024</span>
+        <span class="news-text">Invited talk at the <a href="https://web.stanford.edu/group/it-forum/colloquium.html" target="_blank" rel="noopener">Stanford Information Theory Forum</a> on neural data compression.</span>
+      </li>
+    </ul>
+    <button class="show-more-btn" id="news-toggle" onclick="toggleNews()" aria-expanded="false">Show more ↓</button>
+  </section>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr bgcolor="#ffffd0">
-          <td width="25%"><img src="images/active_learning.png" alt="clean-usnob" width="160" height="130"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2312.05328">
-                  <papertitle>Bad Students Make Great Teachers: Active Learning Accelerates Large-Scale Visual Understanding</papertitle>
-                </a>
-                <br>
-                Talfan Evans, Shreya Pathak, Hamza Merzic, <strong>Jonathan Richard Schwarz</strong>, Ryutaro Tanno, Olivier J. Henaff
-				<br>
-			  	<br>
-				<em>ECCV 2024</em>
-              </p>
-          </td>
-          </td>
-        </table>
+  <!-- ═══ PUBLICATIONS ═══ -->
+  <section class="papers-section">
+    <p class="section-label">Selected Publications</p>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/c3.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2312.02753v1">
-                  <papertitle>C3: High-performance and low-complexity neural compression from a single image or video</papertitle>
-                </a>
-                <br>
-                Hyunjik Kim, Matthias Bauer, Lucas Theis, <strong>Jonathan Richard Schwarz</strong>, Emilien Dupont
-		<br>
-	  	<br>
-                <a href="https://github.com/google-deepmind/c3_neural_compression">💻 Code</a>
-	  	<br>
-                <a href="https://c3-neural-compression.github.io/">🔗 Project Website</a>
-                <br>
-                <br>
-				<em>CVPR 2024</em>
-              </p>
-          </td>
-        </table>
+    <div id="papers-list">
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/ecop.png" alt="clean-usnob" width="160" height="140"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2302.00617">
-                  <papertitle>Efficient Meta-Learning via Error-based Context Pruning for Implicit Neural Representations</papertitle>
-                </a>
-                <br>
-                Jihoon Tack, Subin Kim, Sihyun Yu, Jaeho Lee, Jinwoo Shin, <strong>Jonathan Richard Schwarz</strong>
-		<br>
-	  	<br>
-                <a href="https://jihoontack.github.io/assets/gradncp.pdf">🗣️ Slides</a>
-	  	<br>
-                <a href="https://github.com/jihoontack/GradNCP">💻 Code</a>
-		<br>
-	  	<br>
-		<em>NeurIPS 2023</em>
-              </p>
-          </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>arXiv</strong>2026</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2603.06610" target="_blank" rel="noopener">CapTrack: Multifaceted Evaluation of Forgetting in LLM Post-Training</a></p>
+          <p class="paper-authors">Thede, Winzeck, Akata, <strong>Schwarz</strong></p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/2603.06610" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/ebml.png" alt="clean-usnob" width="160" height="140"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://openreview.net/pdf?id=tt7bQnTdRm">
-                  <papertitle>Secure Out-of-Distribution Task Generalization with Energy-Based Models</papertitle>
-                </a>
-                <br>
-                Shengzhuang Chen, Long-Kai Huang, <strong>Jonathan Richard Schwarz</strong>, Yilun Du, Ying Wei
-		<br>
-	  	<br>
-		<em>NeurIPS 2023</em>
-              </p>
-          </td>
-        </table>
-		
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr bgcolor="#ffffd0">
-          <td width="25%"><img src="images/vc_inr.png" alt="clean-usnob" width="160" height="160"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2301.09479">
-                  <papertitle>Modality-Agnostic Variational Compression of Implicit Neural Representations (VC-INR)</papertitle>
-                </a>
-                <br>
-                <strong>Jonathan Richard Schwarz</strong>*, Jihoon Tack*, Yee Whye Teh, Jaeho Lee, Jinwoo Shin
-		<br>
-	  	<br>
-		<em>ICML 2023</em>
-		<br>
-		<br>
-	  	<em>* : Joint first authorship</em>
-              </p>
-          </td>
-          </td>
-        </table>
-		
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/spatial_functa.png" alt="clean-usnob" width="160" height="180"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2302.03130">
-                  <papertitle>Spatial Functa: Scaling Functa to ImageNet Classification and Generation</papertitle>
-                </a>
-                <br>
-		Matthias Bauer*, Emilien Dupont, Andy Brock, Dan Rosenbaum, <strong>Jonathan Richard Schwarz</strong>, Hyunjik Kim*
-		<br>
-	  	<br>
-		<em>arXiv 2023</em>
-		<br>
-		<br>
-              </p>
-          </td>
-        </table>	
-		
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/mscn.png" alt="clean-usnob" width="160" height="140"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2205.08957">
-                  <papertitle>Meta-Learning Sparse Compression Networks (MSCN)</papertitle>
-                </a>
-                <br>
-                <strong>Jonathan Richard Schwarz</strong>, Yee Whye Teh
-                <br>
-                <br>
-                <em>Transactions on Machine Learning Research (TMLR) 2022</em>
-                <br>
-                <br>
-              </p>
-          </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>arXiv</strong>2025</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2510.26384" target="_blank" rel="noopener">Scales++: Compute Efficient Evaluation Subset Selection with Cognitive Scales Embeddings</a></p>
+          <p class="paper-authors">Bean, Seedat, Chen, <strong>Schwarz</strong></p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/2510.26384" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/bpriors.png" alt="clean-usnob" width="160" height="120"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="https://arxiv.org/abs/2010.14274">
-                  <papertitle>Behavior Priors for Efficient Reinforcement Learning</papertitle>
-                </a>
-                <br>
-		Dhruva Tirumala, Alexandre Galashov, Hyeonwoo Noh, Leonard Hasenclever, Razvan Pascanu, <strong>Jonathan Richard Schwarz</strong>, Guillaume Desjardins, Wojciech Marian Czarnecki, Arun Ahuja, Yee Whye Teh, Nicolas Heess
-                <br>
-                <br>
-                <em>Journal of Machine Learning Research (JMLR) 2022</em>
-                <br>
-                <br>
-              </p>
-          </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>EMNLP</strong>2025</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2509.16093" target="_blank" rel="noopener">Beyond Pointwise Scores: Decomposed Criteria-Based Evaluation of LLM Responses</a></p>
+          <p class="paper-authors">Yu, Seedat, Herrmannova, Schilder, <strong>Schwarz</strong></p>
+          <div class="paper-links"><a href="https://arxiv.org/abs/2509.16093" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a></div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <td width="25%"><img src="images/powerprop.png" alt="clean-usnob" width="160" height="140"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/2110.00296">
-                    <papertitle>Powerpropagation: A sparsity inducing weight reparameterisation</papertitle>
-                  </a>
-                  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Siddhant M. Jayakumar, Razvan Pascanu, Peter E. Latham, Yee Whye Teh
-                  <br>
-                  <br>
-                  <em>Neural Information Processing Systems (NeurIPS) 2021</em>
-                  <br>
-                  <br>
-                  <a href="https://github.com/deepmind/deepmind-research/tree/master/powerpropagation">💻 Code</a>
-                </p>
-            </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>TMLR</strong>2025</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2508.11551" target="_blank" rel="noopener">ADMIRE-BayesOpt: Accelerated Data Mixture Reweighting for Language Models with Bayesian Optimization</a></p>
+          <p class="paper-authors">Chen*, Ouyang*, Pearce, Hartvigsen, <strong>Schwarz</strong></p>
+          <div class="paper-links">
+            <a href="https://xo28.github.io/ADMIRE-BayesOpt-homepage/" target="_blank" rel="noopener"><i class="ti ti-world" aria-hidden="true"></i>website</a>
+            <a href="https://github.com/xo28/ADMIRE-BayesOpt" target="_blank" rel="noopener"><i class="ti ti-brand-github" aria-hidden="true"></i>code</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr bgcolor="#ffffd0">
-            <td width="25%"><img src="images/gp.png" alt="clean-usnob" width="160" height="140"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1901.11356">
-                    <papertitle>Functional Regularisation for Continual Learning using Gaussian Processes</papertitle>
-                  </a>
-                  <br>
-                  <strong>Jonathan Richard Schwarz</strong>*, Michalis K. Titsias*, Alexander G. de G. Matthews, Razvan Pascanu, Yee Whye Teh
-                  <br>
-                  <br>
-                  <em>International Conference on Learning Representations (ICLR) 2020</em>
-                  <br>
-                  <br>
-                  <a href="https://github.com/deepmind/deepmind-research/blob/master/functional_regularisation_for_continual_learning/frcl.ipynb">💻 Code</a>
-		  <br>
-                  <br>
-                  <em>* : Joint first authorship</em>
-                </p>
-            </td>
-          </tr>
-        </table>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/multi.png" alt="clean-usnob" width="160" height="100"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://openreview.net/forum?id=rylnK6VtDH">
-                    <papertitle>Multiplicative Interactions and Where to Find Them</papertitle>
-                  </a>
-                  <br>
-                  Siddhant M. Jayakumar, Wojciech M. Czarnecki, Jacob Menick, <strong>Jonathan Richard Schwarz</strong>, Jack Rae, Simon Osindero, Yee Whye Teh, Tim Harley, Razvan Pascanu
-                  <br>
-                  <br>
-                  <em>International Conference on Learning Representations (ICLR) 2020</em>
-                  <br>
-                  <br>
-                </p>
-            </td>
-          </tr>
-        </table>
+      <article class="paper-row highlight">
+        <div class="paper-venue"><strong>ACL</strong>2025 <span class="oral-badge">oral</span></div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2506.12597" target="_blank" rel="noopener">Automatic Expert Discovery in LLM Upcycling via Sparse Interpolated Mixture-of-Experts</a></p>
+          <p class="paper-authors">Chen, Wei*, <strong>Schwarz*</strong></p>
+          <div class="paper-links">
+            <a href="https://szc12153.github.io/sparse_interpolated_experts/simoe/" target="_blank" rel="noopener"><i class="ti ti-world" aria-hidden="true"></i>website</a>
+            <a href="https://arxiv.org/abs/2506.12597" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <td width="25%"><img src="images/np_model_based.png" alt="clean-usnob" width="160" height="140"></td>
-          <td width="75%" valign="top">
-            <p>
-              <p>
-                <a href="http://arxiv.org/abs/1903.11907">
-                  <papertitle>Meta-Learning surrogate models for sequential decision making</papertitle>
-                </a>
-                <br>
-                  <strong>Jonathan Richard Schwarz</strong>*, Alexandre Galashov*, Hyunjik Kim, Marta Garnelo, David Saxton, Pushmeet Kohli, SM Ali Eslami°, Yee Whye Teh°
-                <br>
-                <br>
-                <em>ICLR 2019 Workshop on Structure & Priors in Reinforcement Learning</em>
-                <br>
-                <br>
-                <em>*, ° : Joint first/senior authorship</em>
-              </p>
-          </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>Cell</strong>2024</div>
+        <div>
+          <p class="paper-title"><a href="https://www.cell.com/cell/fulltext/S0092-8674(24)01070-5" target="_blank" rel="noopener">Empowering Biomedical Discovery with AI Agents</a></p>
+          <p class="paper-authors">Gao, Fang, Huang, Giunchiglia, Noori, <strong>Schwarz</strong>, Ektefaie, Kondic, Zitnik</p>
+          <div class="paper-links">
+            <a href="https://www.cell.com/cell/fulltext/S0092-8674(24)01070-5" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-          <tr>
-            <td width="25%"><img src="images/storage.png" alt="clean-usnob" width="140" height="120",  class="center"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1811.11682">
-                    <papertitle>Experience replay for continual learning</papertitle>
-                  </a>
-                  <br>
-                  David Rolnick, Arun Ahuja, <strong>Jonathan Richard Schwarz</strong>, Timothy P. Lillicrap, Greg Wayne
-                  <br>
-                  <br>
-                  <em>Neural Information Processing Systems (NeurIPS) 2019</em>
-                </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="25%"><img src="images/kl.png" alt="clean-usnob" width="160" height="110"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1905.01240">
-                    <papertitle>Information asymmetry in KL-regularized RL</papertitle>
-                  </a>
-                  <br>
-                  Alexandre Galashov, Siddhant M Jayakumar, Leonard Hasenclever, Dhruva Tirumala, <strong>Jonathan Richard Schwarz</strong>, Guillaume Desjardins, Wojciech M Czarnecki, Yee Whye Teh, Razvan Pascanu, Nicolas Heess
-                  <br>
-                  <br>
-                  <em>International Conference on Learning Representations (ICLR) 2019</em>
-                </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="25%"><img src="images/comparison.png" alt="clean-usnob" width="160" height="130"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="http://bayesiandeeplearning.org/2018/papers/92.pdf">
-                    <papertitle>Empirical Evaluation of Neural Process Objectives</papertitle>
-                  </a>
-                  <br>
-                  Tuan Anh Le, Hyunjik Kim, Marta Garnelo, Dan Rosenbaum, <strong>Jonathan Richard Schwarz</strong>, Yee Whye Teh
-                  <br>
-                  <br>
-                  <em>NeurIPS 2018 workshop on Bayesian Deep Learning</em>
-                </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="25%"><img src="images/anp.png" alt="clean-usnob" width="160" height="160"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1901.05761">
-                    <papertitle>Attentive Neural Processes</papertitle>
-                  </a>
-                  <br>
-                  Hyunjik Kim, Andriy Mnih, <strong>Jonathan Richard Schwarz</strong>, Marta Garnelo, SM Ali Eslami, Dan Rosenbaum, Oriol Vinyals, Yee Whye Teh
-                  <br>
-                  <br>
-                  <em>International Conference on Learning Representations (ICLR) 2019</em>
-                  <br>
-                  <br>
-                  <a href="https://github.com/deepmind/neural-processes">💻 Code</a>
-                </p>
-            </td>
-          </tr>
-          <tr bgcolor="#ffffd0">
-            <td width="25%"><img src="images/np.png" alt="clean-usnob" width="160" height="140"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1807.01622">
-                    <papertitle>Neural Processes</papertitle>
-                  </a>
-                  <br>
-                  Marta Garnelo, <strong>Jonathan Richard Schwarz</strong>, Dan Rosenbaum, Fabio Viola, Danilo J Rezende, SM Eslami, Yee Whye Teh
-                  <br>
-                  <br>
-                  <em>ICML 2018 Workshop on Theoretical Foundations and Applications of Deep Generative Models</em> <font color="red"><strong> (Spotlight talk)</strong></font>
-                  <br>
-                  <br>
-		  <a href="https://www.youtube.com/watch?v=bpsoGt-NYYk">🗣️ Talk (credit to Marta)</a>
-                  <br>
-                  <a href="https://github.com/deepmind/neural-processes">💻 Code</a>
-                </p>
-            </td>
-          </tr>
-          <tr bgcolor="#ffffd0">
-            <td width="25%"><img src="images/p_and_c.png" alt="clean-usnob" width="160" height="120"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1805.06370">
-                    <papertitle>Progress & Compress: A scalable framework for continual learning</papertitle>
-                  </a>
-                  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Jelena Luketina, Wojciech M. Czarnecki, Agnieszka Grabska-Barwinska, Yee Whye Teh, Raia Hadsell°, Razvan Pascanu°
-                  <br>
-                  <br>
-                  <em>International Conference on Machine Learning (ICML) 2018</em> <font color="red"><strong> (Long oral)</strong></font>
-                  <br>
-                  <br>
-		  <a href="https://www.facebook.com/icml.imls/videos/session-3-deep-learning-neural-network-architectures/432573817257139">🗣️ Talk</a>
-                  <br>
-		  <a href="https://drive.google.com/drive/folders/1CWDGnf_a5YIJH1a9sUNdQsYtRxal4nxf?usp=sharing">📊 Data (Sequential Omniglot)</a>
-                  <br>
-                  <br>
-                  <em>° : Joint senior authorship</em>
-                </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="25%"><img src="images/narrative_qa.png" alt="clean-usnob" width="160" height="160"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="https://arxiv.org/abs/1712.07040">
-                    <papertitle>The NarrativeQA Reading Comprehension Challenge</papertitle>
-                  </a>
-                  <br>
-                  Tomas Kocisky, <strong>Jonathan Richard Schwarz</strong>, Phil Blunsom, Chris Dyer, Karl Moritz Hermann, Gabor Melis, Edward Grefenstette
-                  <br>
-                  <br>
-		  <a href="https://vimeo.com/285804931">🗣️ Talk (credit to Tomas)</a>
-                  <br>
-		  <a href="https://github.com/deepmind/narrativeqa">📊 Data</a>
-                  <br>
-                  <br>
-                  <em>Transactions of the Association for Computational Linguistics (TACL) 2018</em>
-                </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="25%"><img src="images/recurrent_vae.png" alt="clean-usnob" width="160" height="120"></td>
-            <td width="75%" valign="top">
-              <p>
-                <p>
-                  <a href="http://www.ipab.inf.ed.ac.uk/cgvu/0414.pdf">
-                    <papertitle>A Recurrent Variational Autoencoder for Human Motion Synthesis</papertitle>
-                  </a>
-                  <br>
-                  Ikhsanul Habibie, Daniel Holden, <strong>Jonathan Richard Schwarz</strong>, Joe Yearsley, Taku Komura
-                  <br>
-                  <br>
-		  <a href="https://github.com/Brimborough/deep-motion-analysis">💻 Code</a>
-                  <br>
-		  <a href="https://bitbucket.org/jonathan-schwarz/edinburgh_locomotion_mocap_dataset">📊 Data</a>
-                  <br>
-                  <br>
-                  <em>British Machine Vision Conference (BMVC) 2017</em>
-                </p>
-            </td>
-          </tr>
-        </table>
+      <article class="paper-row highlight">
+        <div class="paper-venue"><strong>PhD Thesis</strong>2023</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2301.09479" target="_blank" rel="noopener">Sparse Parameterisations For Efficient Machine Learning Algorithms</a></p>
+          <p class="paper-authors"><strong>Schwarz</strong></p>
+          <div class="paper-links">
+            <a href="https://discovery.ucl.ac.uk/id/eprint/10180580/2/Thesis%20-%20Jonathan%20Richard%20Schwarz.pdf" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-	<br>
-	<center>
-	<heading>Academic Workshops</heading>
-	</center>
-	<br>
-	<br>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>ICML</strong>2023</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2301.09479" target="_blank" rel="noopener">Modality-Agnostic Variational Compression of Implicit Neural Representations (VC-INR)</a></p>
+          <p class="paper-authors"><strong>Schwarz*</strong>, Tack*, Teh, Lee, Shin</p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/2301.09479" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <td width="15%"><img src="images/neurips.jpeg" alt="clean-usnob" width="80" height="80"></td>
-            <td width="85%" valign="top">
-              <p>
-                <p>
-                  <a href="https://compositional-learning.github.io/">
-                    <papertitle>NeurIPS 2024 Compositional Learning: Perspectives, Methods, and Paths Forward</papertitle>
-                  </a>
-                  <br>
-		  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Ying Wei, Yilun Du, Laurent Charlin, Mengye Ren, Matthias Bethge
-                  <br>
-                  <br>
-                </p>
-            </td>
-        </table>
+      <article class="paper-row highlight">
+        <div class="paper-venue"><strong>NeurIPS</strong>2021 <span class="oral-badge">oral</span></div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/2110.00296" target="_blank" rel="noopener">Powerpropagation: A sparsity inducing weight reparameterisation</a></p>
+          <p class="paper-authors"><strong>Schwarz</strong>, Jayakumar, Pascanu, Latham, Teh</p>
+          <div class="paper-links"><a href="https://github.com/deepmind/deepmind-research/tree/master/powerpropagation" target="_blank" rel="noopener"><i class="ti ti-brand-github" aria-hidden="true"></i>code</a></div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <td width="15%"><img src="images/neural_fields.png" alt="clean-usnob" width="80" height="60"></td>
-            <td width="85%" valign="top">
-              <p>
-                <p>
-                  <a href="https://sites.google.com/view/neural-fields">
-                    <papertitle>ICLR 2023 Neural Fields across Fields: Methods and Applications of Implicit Neural Representations</papertitle>
-                  </a>
-                  <br>
-		  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Hyunjik Kim, Emilien Dupont, Thu Nguyen-Phuoc, Vincent Sitzman, Srinath Sridhar
-                  <br>
-                  <br>
-                </p>
-            </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>ICLR</strong>2020</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/1901.11356" target="_blank" rel="noopener">Functional Regularisation for Continual Learning using Gaussian Processes</a></p>
+          <p class="paper-authors"><strong>Schwarz*</strong>, Titsias*, Matthews, Pascanu, Teh</p>
+          <div class="paper-links"><a href="https://github.com/deepmind/deepmind-research/blob/master/functional_regularisation_for_continual_learning/frcl.ipynb" target="_blank" rel="noopener"><i class="ti ti-brand-github" aria-hidden="true"></i>code</a></div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <td width="15%"><img src="images/neurips.jpeg" alt="clean-usnob" width="80" height="80"></td>
-            <td width="85%" valign="top">
-              <p>
-                <p>
-                  <a href="https://meta-learn.github.io/2021/">
-                    <papertitle>NeurIPS 2021 Workshop on Meta Learning</papertitle>
-                  </a>
-                  <br>
-		  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Fábio Ferreira, Erin Grant, Frank Hutter, Joaquin Vanschoren, Huaxiu Yao
-                  <br>
-                  <br>
-                </p>
-            </td>
-        </table>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <td width="15%"><img src="images/neurips.jpeg" alt="clean-usnob" width="80" height="80"></td>
-            <td width="85%" valign="top">
-              <p>
-                <p>
-                  <a href="https://meta-learn.github.io/2020/">
-                    <papertitle>NeurIPS 2020 Workshop on Meta Learning</papertitle>
-                  </a>
-                  <br>
-		  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Roberto Calandra, Jeff Clune, Erin Grant, Joaquin Vanschoren, Francesco Visin, Jane Wang
-                  <br>
-                  <br>
-                </p>
-            </td>
-        </table>
+      <article class="paper-row">
+        <div class="paper-venue"><strong>NeurIPS</strong>2019</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/1811.11682" target="_blank" rel="noopener">Experience Replay for Continual Learning</a></p>
+          <p class="paper-authors">Rolnick, Ahuja, <strong>Schwarz</strong>, Lillicrap, Wayne</p>
+          <div class="paper-links">
+            <a href="https://arxiv.org/abs/1811.11682" target="_blank" rel="noopener"><i class="ti ti-file-text" aria-hidden="true"></i>paper</a>
+          </div>
+        </div>
+      </article>
 
-        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-            <td width="15%"><img src="images/icml_cl.png" alt="clean-usnob" width="80" height="80"></td>
-            <td width="85%" valign="top">
-              <p>
-                <p>
-                  <a href="https://sites.google.com/view/cl-icml/">
-                    <papertitle>ICML 2020 Workshop on Continual Learning</papertitle>
-                  </a>
-                  <br>
-		  <br>
-                  <strong>Jonathan Richard Schwarz</strong>, Rahaf Aljundi, Eugene Belilovsky, Arslan Chaudhry, Puneet Dokania, Sayna Ebrahimi, Haytham Fayek, David Lopez-Paz , Marc Pickett
-                  <br>
-                  <br>
-                </p>
-            </td>
-        </table>
+      <article class="paper-row highlight">
+        <div class="paper-venue"><strong>ICML</strong>2018 <span class="oral-badge">oral</span></div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/1805.06370" target="_blank" rel="noopener">Progress &amp; Compress: A scalable framework for continual learning</a></p>
+          <p class="paper-authors"><strong>Schwarz</strong>, Luketina, Czarnecki, Grabska-Barwinska, Teh, Hadsell°, Pascanu°</p>
+          <div class="paper-links">
+            <a href="https://www.facebook.com/icml.imls/videos/session-3-deep-learning-neural-network-architectures/432573817257139" target="_blank" rel="noopener"><i class="ti ti-player-play" aria-hidden="true"></i>talk</a>
+          </div>
+        </div>
+      </article>
 
-  Based on <a href="https://jonbarron.info/">Jon Barron's</a> website.
+      <article class="paper-row">
+        <div class="paper-venue"><strong>ICML WS</strong>2018</div>
+        <div>
+          <p class="paper-title"><a href="https://arxiv.org/abs/1807.01622" target="_blank" rel="noopener">Neural Processes</a></p>
+          <p class="paper-authors">Garnelo, <strong>Schwarz</strong>, Rosenbaum, Viola, Rezende, Eslami, Teh</p>
+          <div class="paper-links">
+            <a href="https://www.youtube.com/watch?v=bpsoGt-NYYk" target="_blank" rel="noopener"><i class="ti ti-player-play" aria-hidden="true"></i>talk</a>
+            <a href="https://github.com/deepmind/neural-processes" target="_blank" rel="noopener"><i class="ti ti-brand-github" aria-hidden="true"></i>code</a>
+          </div>
+        </div>
+      </article>
 
-<!-- Google Analytics -->
+    </div><!-- #papers-list -->
+  </section>
+
+  <!-- ═══ PEOPLE ═══ -->
+  <section class="people-section">
+    <p class="section-label">Students &amp; Collaborators</p>
+
+    <div class="people-group">
+      <p class="people-group-label">Current Students &amp; Researchers</p>
+      <div class="people-grid">
+
+        <div class="person-card incoming">
+          <p class="person-name">Van Hoan Trinh <span class="person-badge">Incoming</span></p>
+          <p class="person-affil">PhD Student · Imperial Frontier AI Lab</p>
+        </div>
+
+        <div class="person-card incoming">
+          <p class="person-name">Navlika Singh <span class="person-badge">Incoming</span></p>
+          <p class="person-affil">PhD Student · Imperial Frontier AI Lab</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://szc12153.github.io/" target="_blank" rel="noopener">Shengzhuang Chen</a></p>
+          <p class="person-affil">PhD Student · Imperial Frontier AI Lab</p>
+          <p class="person-affil">Lead Researcher · TR Foundational Research</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://nabeelseedat.com/" target="_blank" rel="noopener">Nabeel Seedat</a></p>
+          <p class="person-affil">Lead Researcher · TR Foundational Research</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://www.oii.ox.ac.uk/people/profiles/andrew-bean/" target="_blank" rel="noopener">Andrew Bean</a></p>
+          <p class="person-affil">Senior Researcher · TR Foundational Research</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name">Yejin Bang</p>
+          <p class="person-affil">Senior Researcher · TR Foundational Research</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="people-group">
+      <p class="people-group-label">Former Students</p>
+      <div class="people-grid">
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://jihoontack.github.io/" target="_blank" rel="noopener">Jihoon Tack</a></p>
+          <p class="person-affil">Senior Researcher · Microsoft Research</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="people-group">
+      <p class="people-group-label">Collaborators</p>
+      <div class="people-grid">
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://www.stats.ox.ac.uk/~teh/" target="_blank" rel="noopener">Yee Whye Teh</a></p>
+          <p class="person-affil">Professor · University of Oxford</p>
+          <p class="person-affil">Research Director · Google DeepMind</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="http://www.gatsby.ucl.ac.uk/~pel/" target="_blank" rel="noopener">Peter Latham</a></p>
+          <p class="person-affil">Professor · Gatsby Unit, UCL</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://scholar.google.com/citations?user=uyMCZaIAAAAJ" target="_blank" rel="noopener">Razvan Pascanu</a></p>
+          <p class="person-affil">Research Scientist · Google DeepMind</p>
+          <p class="person-affil">Affiliate Member · MILA</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://hyunjik11.github.io/" target="_blank" rel="noopener">Hyunjik Kim</a></p>
+          <p class="person-affil">Research Scientist · Google DeepMind</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://zitniklab.hms.harvard.edu/" target="_blank" rel="noopener">Marinka Zitnik</a></p>
+          <p class="person-affil">Associate Professor · Harvard University</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://scholar.google.com/citations?user=nAfGe_YAAAAJ" target="_blank" rel="noopener">Ali Eslami</a></p>
+          <p class="person-affil">Distinguished Research Scientist · Google DeepMind</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://wp.doc.ic.ac.uk/arusso/" target="_blank" rel="noopener">Alessandra Russo</a></p>
+          <p class="person-affil">Professor · Imperial College London</p>
+        </div>
+
+        <div class="person-card">
+          <p class="person-name"><a href="https://www.law.cam.ac.uk/people/academic/f-steffek/6136" target="_blank" rel="noopener">Felix Steffek</a></p>
+          <p class="person-affil">Professor · University of Cambridge</p>
+          <p class="person-affil">Principal Legal AI Advisor · TR Foundational Research</p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="site-footer">
+    <p>Jonathan Richard Schwarz · <a href="mailto:jschwarz@imperial.ac.uk" style="color:inherit;">jschwarz@imperial.ac.uk</a></p>
+  </footer>
+
+</main>
+
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-62553068-1', 'auto');
-ga('send', 'pageview');
+  function toggleNews() {
+    const extras = document.querySelectorAll('.extra-news');
+    const btn = document.getElementById('news-toggle');
+    const isHidden = extras[0].classList.contains('hidden');
+    extras.forEach(el => el.classList.toggle('hidden', !isHidden));
+    btn.textContent = isHidden ? 'Show less ↑' : 'Show more ↓';
+    btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+  }
 </script>
-<!-- End Google Analytics -->
-
 </body>
-
 </html>
